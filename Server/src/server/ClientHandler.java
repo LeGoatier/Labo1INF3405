@@ -21,7 +21,7 @@ public class ClientHandler extends Thread { // pour traiter la demande de chaque
 			out.writeUTF("\033[91mConnection Completed\033[0m\n"); // envoi de message
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 			while(true) {
-				cmd.handle(in.readUTF(), out);
+				cmd.handleCmd(in.readUTF(), in, out);
 			}
 		} catch (IOException e) {
 			System.out.println("Error handling client# " + clientNumber + ": " + e);
