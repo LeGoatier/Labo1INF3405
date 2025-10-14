@@ -16,6 +16,7 @@ public class IpValidater {
 					System.out.print("L'adresse doit être sur 4 octets");
 					continue;
 				}
+				try {
 				for(int i = 0; i < 4 ; i++)
 				{
 					int temp = Integer.parseInt(bytes[i]);
@@ -29,6 +30,7 @@ public class IpValidater {
 				}
 				scanner.close();
 				return input;
+				} catch(NumberFormatException e) {/*recommence la boucle while true*/}
 			}
 			
 			
@@ -36,6 +38,7 @@ public class IpValidater {
  public int getPort() {
 	 Scanner scanner = new Scanner(System.in);
 	 while(true) {
+		 try {
 			System.out.print("Veulliez entrer le port du serveur du serveur "
 					+ "\nil devrait ëtre entre 5000 et 5050 pour être valide");
 			Integer input  = scanner.nextInt();
@@ -43,6 +46,8 @@ public class IpValidater {
 				scanner.close();
 				return input;
 			}
+		 }
+		 catch(NumberFormatException e){/*recommence la boucle while*/}
 			
 		}
  }
