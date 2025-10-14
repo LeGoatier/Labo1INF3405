@@ -3,13 +3,19 @@ package server;
 import java.util.Scanner;
 
 public class IpValidater {
+	
+	private Scanner scanner ;
+	public IpValidater() {
+		scanner = new Scanner(System.in);
+	}
+	
+	
  public String getIP() {
 	// Adresse et port du serveur
-			Scanner scanner = new Scanner(System.in);
 			inputValidationAdresse:
 			while(true) {
 				System.out.print("Veulliez entrer l'adresse IPv4 du serveur\n");
-				String input = scanner.nextLine();
+				String input = this.scanner.nextLine();
 				String[] bytes = input.split("\\.");
 				if(bytes.length != 4)
 				{
@@ -28,7 +34,6 @@ public class IpValidater {
 					}
 						
 				}
-				scanner.close();
 				return input;
 				} catch(NumberFormatException e) {/*recommence la boucle while true*/}
 			}
@@ -36,14 +41,13 @@ public class IpValidater {
 			
  }
  public int getPort() {
-	 Scanner scanner = new Scanner(System.in);
+	
 	 while(true) {
 		 try {
 			System.out.print("Veulliez entrer le port du serveur du serveur "
 					+ "\nil devrait ëtre entre 5000 et 5050 pour être valide\n");
-			Integer input  = scanner.nextInt();
+			Integer input  = this.scanner.nextInt();
 			if(input >= 5000 && input <= 5050) {
-				scanner.close();
 				return input;
 			}
 		 }
