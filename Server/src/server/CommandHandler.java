@@ -62,15 +62,46 @@ public class CommandHandler {
 		}
 	}
 
+	private void changeDirectory(String argument, DataOutputStream out) {
+		try {
+			File newDir;
+		    
+		    if (argument.equals("..")) {
+		        newDir = currentDirectory.getParentFile();
+		        if (newDir == null) newDir = currentDirectory; // rester à la racine
+		    } else {
+		        newDir = new File(currentDirectory, argument);
+		    }
+	
+		    if (newDir.exists() && newDir.isDirectory()) {
+		    		currentDirectory = newDir.getCanonicalFile(); // normalise le chemin
+		        out.writeUTF("Répertoire courant: " + currentDirectory.getName() + "\n");
+		    } else {
+		        out.writeUTF("cd: répertoire introuvable: " + argument + "\n");
+		    }
+		}catch(IOException e) {
+			System.out.println("IO EXCEPTION");
+		}
+	}
+
 	private void listFiles(DataOutputStream out) {
+		try {
         File[] files = currentDirectory.listFiles();
         if (files == null || files.length == 0) {
             out.writeUTF("Aucun fichier dans ce répertoire\n");
         } else {
             for (File f : files) {
-                out.write(f.getName() + "\n");
+            	String s = "";
+            	if(f.isDirectory()) s.concat("\033[94m");
+            	else if(f.isFile()) s.concat("\033[92m");
+            	else s.concat("\033[91m");
+            	s.concat(f.getName()).concat("\033[0m\n");
+            	
             }
         }
+		}catch(IOException e) {
+			System.out.println("IO EXCEPTION");
+		}
 		
 	}
 }
