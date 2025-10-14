@@ -15,7 +15,7 @@ public class CommandHandler {
 				byte[] data  = Files.readAllBytes(Paths.get(new URI(lastcmd.split(" ")[lastcmd.split(" ").length -1])));
 				out.write(data);
 			}
-			catch (IOException e) {
+			catch (Exception e) {
 	            e.printStackTrace();
 
 			}
