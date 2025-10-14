@@ -1,8 +1,12 @@
 package server;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 public class CommandHandler {
 	File currentDirectory = new File("");
 	
@@ -31,7 +35,7 @@ public class CommandHandler {
 		        		break;
 	
 		        case "UPLOAD":
-		            receiveFile(argument, out);
+		            receiveFile(argument, in, out);
 		            break;
 	
 		        case "DOWNLOAD":
@@ -106,6 +110,33 @@ public class CommandHandler {
 		
 	}
 	
+	private void receiveFile(String fileName, DataInputStream in, DataOutputStream out) {
+		try {
+			out.writeUTF("ACK-UPLOAD");
+			File file = new File(currentDirectory, fileName);
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(in.readAllBytes());
+			fos.close();
+		}
+		catch (IOException e) {
+            e.printStackTrace();
+		}
+	}
+	
+	private void sendFile(String fileName, DataOutputStream out) {
+		try {
+			byte[] data  = Files.readAllBytes(Paths.get(new URI(currentDirectory.getPath().concat("/").concat(fileName))));
+			out.write(data);
+		}
+		catch (IOException e) {
+            e.printStackTrace();
+		}
+		catch(Exception e) {
+			
+		}
+	}
+		
+
 	private void makeDirectory(String argument, DataOutputStream out) {
 		try {
 			File newDir = new File(currentDirectory, argument);
