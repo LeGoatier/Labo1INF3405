@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 public class CommandHandler {
 	String lastcmd;
-	
+	boolean hasConnection = true;
 	
 	
 	
@@ -57,13 +57,14 @@ public class CommandHandler {
 		
 		
 		switch (lastcmd.split(" ")[0]) {
-		case "exit": 
+		case "EXIT": 
 			exit(in,out,s);
+			hasConnection = false;
 			break;
-		case "download" :
+		case "DOWNLOAD" :
 			download(in,out);
 			break;
-		case "upload":
+		case "UPLOAD":
 			upload(in,out);
 			break;
 		default : 
