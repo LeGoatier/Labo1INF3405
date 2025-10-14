@@ -97,13 +97,16 @@ public class CommandHandler {
 	        if (files == null || files.length == 0) {
 	            out.writeUTF("Aucun fichier dans ce répertoire\n");
 	        } else {
-	        		String s = "";
-	            for (File f : files) {
-		            	if(f.isDirectory()) s.concat("\033[94m");
-		            	else if(f.isFile()) s.concat("\033[92m");
-		            	else s.concat("\033[91m");
-		            	s.concat(f.getName()).concat("\033[0m\n");
-	            }
+	        		StringBuilder sb = new StringBuilder();
+	        		for (File f : files) {
+	        		    if (f.isDirectory()) sb.append("\033[94m");
+	        		    else if (f.isFile()) sb.append("\033[92m");
+	        		    else sb.append("\033[91m");
+
+	        		    sb.append(f.getName()).append("\033[0m\n");
+	        		}
+
+	        		String s = sb.toString();
 	            out.writeUTF(s);
 	        }
 		}catch(IOException e) {
