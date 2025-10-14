@@ -43,7 +43,7 @@ public class CommandHandler {
 		            break;
 	
 		        case "EXIT":
-		            exit(out);
+		            out.writeUTF("Bye bye");
 		            break;
 		            
 		        case "ECHO":
@@ -61,6 +61,8 @@ public class CommandHandler {
 			System.out.println("IO EXCEPTION");
 		}
 	}
+
+	
 
 	private void changeDirectory(String argument, DataOutputStream out) {
 		try {
@@ -86,22 +88,50 @@ public class CommandHandler {
 
 	private void listFiles(DataOutputStream out) {
 		try {
-        File[] files = currentDirectory.listFiles();
-        if (files == null || files.length == 0) {
-            out.writeUTF("Aucun fichier dans ce répertoire\n");
-        } else {
-            for (File f : files) {
-            	String s = "";
-            	if(f.isDirectory()) s.concat("\033[94m");
-            	else if(f.isFile()) s.concat("\033[92m");
-            	else s.concat("\033[91m");
-            	s.concat(f.getName()).concat("\033[0m\n");
-            	
-            }
-        }
+	        File[] files = currentDirectory.listFiles();
+	        if (files == null || files.length == 0) {
+	            out.writeUTF("Aucun fichier dans ce répertoire\n");
+	        } else {
+	            for (File f : files) {
+		            	String s = "";
+		            	if(f.isDirectory()) s.concat("\033[94m");
+		            	else if(f.isFile()) s.concat("\033[92m");
+		            	else s.concat("\033[91m");
+		            	s.concat(f.getName()).concat("\033[0m\n");
+	            }
+	        }
 		}catch(IOException e) {
 			System.out.println("IO EXCEPTION");
 		}
 		
+	}
+	
+	private void makeDirectory(String argument, DataOutputStream out) {
+		try {
+			File newDir = new File(currentDirectory, argument);
+		    if (newDir.exists()) {
+		        out.writeUTF("mkdir: le dossier existe déjà\n");
+		    } else if (newDir.mkdir()) {
+		        out.writeUTF("Dossier créé : " + argument + "\n");
+		    } else {
+		        out.writeUTF("Impossible de créer le dossier : " + argument + "\n");
+		    }	
+		}catch(IOException e) {
+			System.out.println("IO EXCEPTION");
+		}
+	}
+	
+	
+	private void deleteFile(String argument, DataOutputStream out) {
+		try {
+			File file = new File(currentDirectory + "/" + argument);
+	        if (file.exists() && file.delete()) {
+	            out.writeUTF("Fichier supprimé\n");
+	        } else {
+	            out.writeUTF("Le fichier n'existe pas\n");
+	        }
+		}catch(IOException e) {
+			System.out.println("IO EXCEPTION");
+		}
 	}
 }
