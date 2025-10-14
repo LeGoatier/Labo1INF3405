@@ -2,6 +2,7 @@ package client;
 
 import java.io.DataInputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 // Application client
 public class Client {
@@ -9,6 +10,45 @@ public class Client {
 
 	public static void main(String[] args) throws Exception {
 		// Adresse et port du serveur
+		Scanner scanner = new Scanner(System.in);
+		boolean ipValide = false;
+		boolean portValide = false;
+		
+		inputValidationAdresse:
+		while(!ipValide) {
+			System.out.print("Veulliez entrer l'adresse IPv4 du serveur");
+			String input = scanner.nextLine();
+			String[] bytes = input.split("\\.");
+			if(bytes.length != 4)
+			{
+				System.out.print("L'adresse doit être sur 4 octets");
+				continue;
+			}
+			for(int i = 0; i < 4 ; i++)
+			{
+				int temp = Integer.parseInt(bytes[i]);
+				if(temp < 0 || temp > 255)
+				{
+					System.out.print("Un octect est entre 0 et 255");
+					
+					continue inputValidationAdresse;
+				}
+					
+			}
+			ipValide = true;
+			
+		}
+		
+		while(!portValide) {
+			System.out.print("Veulliez entrer le port du serveur du serveur "
+					+ "\nil devrait ëtre entre 5000 et 5050 pour être valide");
+			Integer input  = scanner.nextInt();
+			if(input >= 5000 && input <= 5050)
+				 portValide = true;
+			
+		}
+		
+		
 		String serverAddress = "127.0.0.1";
 		int port = 5000;
 		// Création d'une nouvelle connexion aves le serveur
