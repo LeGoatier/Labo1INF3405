@@ -6,13 +6,12 @@ public class CommandHandler {
 	public void handleCmd(String input, DataInputStream in, DataOutputStream out) {
 		try {
 		String[] words = input.split(" ");
-		if(input == "upload") {
-			//while(true) {
-				//in.read();
-			//}
+		if(words[0] == "upload") {
+			out.writeUTF("ACK-UPLOAD");
+			in.readAllBytes();
 		}
-		else if (input == "echo") {
-			out.writeUTF("\033[95m" + input + "\033[0m");
+		else if (words[0] == "echo") {
+
 
 		}
 		}catch(IOException e) {
