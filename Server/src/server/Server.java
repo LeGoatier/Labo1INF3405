@@ -6,7 +6,9 @@ import java.net.ServerSocket;
 
 public class Server {
 	private static ServerSocket Listener;
-
+		IpValidater ipv = new IpValidater();
+		int port = ipv.getPort();
+		String ip = ipv.getIP();
 	// Application Serveur
 	public static void main(String[] args) throws Exception {
 		// Compteur incrémenté à chaque connexion d'un client au serveur
