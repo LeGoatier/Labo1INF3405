@@ -33,7 +33,7 @@ public class Client {
 			System.out.print(">");
 			cmdHandler.lastcmd = scanner.nextLine().toUpperCase();
 			cmdHandler.handleOut(in, out, socket);
-			System.out.println(in.readUTF());
+			
 			
 		}
 	}
