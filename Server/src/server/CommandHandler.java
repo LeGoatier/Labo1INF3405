@@ -110,9 +110,10 @@ public class CommandHandler {
 	private void receiveFile(String fileName, DataInputStream in, DataOutputStream out) {
 		try {
 			out.writeUTF("ACK-UPLOAD");
-			FileOutputStream file = new FileOutputStream(fileName);
-			file.write(in.readAllBytes());
-			file.close();
+			File file = new File(currentDirectory, fileName);
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(in.readAllBytes());
+			fos.close();
 		}
 		catch (IOException e) {
             e.printStackTrace();
