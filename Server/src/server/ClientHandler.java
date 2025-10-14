@@ -17,8 +17,7 @@ public class ClientHandler extends Thread { // pour traiter la demande de chaque
 	public void run() {
 		try {
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream()); // création de canal d’envoi
-			out.writeUTF("Hello from server - you are client#" + clientNumber); // envoi de message
-			
+			out.writeUTF("\033[91mConnectionCompleted\033[0m"); // envoi de message
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 			
 			while(true) {
