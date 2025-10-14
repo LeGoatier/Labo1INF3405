@@ -28,12 +28,11 @@ public class Client {
 		// Attente de la réception d'un message envoyé par le, server sur le canal
 		System.out.print(in.readUTF());	
 		// fermeture de La connexion avec le serveur
-		while(true)
+		while(cmdHandler.hasConnection)
 		{
 			System.out.print(">");
 			cmdHandler.lastcmd = scanner.nextLine().toUpperCase();
 			cmdHandler.handleOut(in, out, socket);
-			
 			
 		}
 	}
