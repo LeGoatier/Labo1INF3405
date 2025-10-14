@@ -85,14 +85,23 @@ public class CommandHandler {
 	}
 
 	private void listFiles(DataOutputStream out) {
+		try {
         File[] files = currentDirectory.listFiles();
         if (files == null || files.length == 0) {
             out.writeUTF("Aucun fichier dans ce répertoire\n");
         } else {
             for (File f : files) {
-                out.write(f.getName() + "\n");
+            	String s = "";
+            	if(f.isDirectory()) s.concat("\033[94m");
+            	else if(f.isFile()) s.concat("\033[92m");
+            	else s.concat("\033[91m");
+            	s.concat(f.getName()).concat("\033[0m\n");
+            	
             }
         }
+		}catch(IOException e) {
+			System.out.println("IO EXCEPTION");
+		}
 		
 	}
 }
