@@ -11,8 +11,11 @@ public class CommandHandler {
 			in.readAllBytes();
 		}
 		else if (words[0] == "echo") {
-
-
+			String s = "";
+			for(int i = 1; i < words.length; ++i) {
+				s.concat(words[i].concat(" "));
+				out.writeUTF(s.concat("\n"));
+			}
 		}
 		}catch(IOException e) {
 			System.out.println("IO EXCEPTION");
