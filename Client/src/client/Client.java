@@ -6,7 +6,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import client.IpValidater;
-
+import client.CommandHandler;
 // Application client
 public class Client {
 	private static Socket socket;
@@ -14,6 +14,7 @@ public class Client {
 	public static void main(String[] args) throws Exception {
 		// Adresse et port du serveur
 		IpValidater ipv = new IpValidater();
+		CommandHandler cmdHandler = new CommandHandler();
 		String ip = ipv.getIP();
 		int port = ipv.getPort();
 		Scanner scanner = new Scanner(System.in);
@@ -30,8 +31,9 @@ public class Client {
 		while(true)
 		{
 			System.out.println(in.readUTF() + "\n");
-			String output = scanner.nextLine();
-			out.writeUTF(output);
+			cmdHandler.lastcmd = scanner.nextLine();
+			cmdHandler.handleOut(in, out, socket);
+			cmdHandler.handleIn(in.readUTF(), in, out);
 			
 		}
 	}
