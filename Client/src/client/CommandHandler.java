@@ -70,6 +70,7 @@ public class CommandHandler {
 			try 
 			{
 				out.writeUTF(lastcmd);
+				System.out.println(in.readUTF());
 			}
 			catch ( IOException e )
 			{
