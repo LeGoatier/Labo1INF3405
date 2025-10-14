@@ -1,6 +1,9 @@
 package server;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -117,6 +120,19 @@ public class CommandHandler {
 		}
 		catch (IOException e) {
             e.printStackTrace();
+		}
+	}
+	
+	private void sendFile(String fileName, DataOutputStream out) {
+		try {
+			byte[] data  = Files.readAllBytes(Paths.get(new URI(currentDirectory.getPath().concat("/").concat(fileName))));
+			out.write(data);
+		}
+		catch (IOException e) {
+            e.printStackTrace();
+		}
+		catch(Exception e) {
+			
 		}
 	}
 		
