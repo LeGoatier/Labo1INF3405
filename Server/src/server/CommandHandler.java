@@ -31,7 +31,7 @@ public class CommandHandler {
 		        		break;
 	
 		        case "UPLOAD":
-		            receiveFile(argument, out);
+		            receiveFile(argument, in, out);
 		            break;
 	
 		        case "DOWNLOAD":
@@ -100,6 +100,19 @@ public class CommandHandler {
             }
         }
 		}catch(IOException e) {
+			System.out.println("IO EXCEPTION");
+		}
+		
+	}
+	
+	private void receiveFile(String fileName, DataInputStream in, DataOutputStream out) {
+		try {
+			out.writeUTF("ACK-UPLOAD");
+			byte[] file = in.readAllBytes();
+			File f = new File(fileName);
+			f.createNewFile();			
+		}
+		catch(IOException e) {
 			System.out.println("IO EXCEPTION");
 		}
 		
