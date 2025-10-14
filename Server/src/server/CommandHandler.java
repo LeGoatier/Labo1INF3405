@@ -13,7 +13,7 @@ public class CommandHandler {
 	public void handleCmd(String input, DataInputStream in, DataOutputStream out) {
 		try {
 			if(input == null || input == "") {
-				out.writeUTF("Commande vide, réessayez\n");
+				out.writeUTF("Commande vide, réessayez");
 			}
 			
 			String[] words = input.split(" ");
@@ -25,7 +25,7 @@ public class CommandHandler {
 		    switch (cmd) {
 		        case "CD":
 		            if (words.length < 2) {
-		                out.writeUTF("Utilisation: cd <répertoire>\n");
+		                out.writeUTF("Utilisation: cd <répertoire>");
 		            } else {
 		                changeDirectory(argument, out);
 		            }
@@ -60,7 +60,7 @@ public class CommandHandler {
 					break;
 					
 		        default:
-		            out.writeUTF("Commande inconnue\n");
+		            out.writeUTF("Commande inconnue");
 		    }			
 		}catch(IOException e) {
 			System.out.println("IO EXCEPTION");
@@ -82,7 +82,7 @@ public class CommandHandler {
 	
 		    if (newDir.exists() && newDir.isDirectory()) {
 		    		currentDirectory = newDir.getCanonicalFile(); // normalise le chemin
-		        out.writeUTF("Répertoire courant: " + currentDirectory.getName() + "\n");
+		        out.writeUTF("Répertoire courant: " + currentDirectory.getName());
 		    } else {
 		        out.writeUTF("cd: répertoire introuvable: " + argument + "\n");
 		    }
@@ -142,11 +142,11 @@ public class CommandHandler {
 		try {
 			File newDir = new File(currentDirectory, argument);
 		    if (newDir.exists()) {
-		        out.writeUTF("mkdir: le dossier existe déjà\n");
+		        out.writeUTF("mkdir: le dossier existe déjà");
 		    } else if (newDir.mkdir()) {
-		        out.writeUTF("Dossier créé : " + argument + "\n");
+		        out.writeUTF("Dossier créé : " + argument );
 		    } else {
-		        out.writeUTF("Impossible de créer le dossier : " + argument + "\n");
+		        out.writeUTF("Impossible de créer le dossier : " + argument);
 		    }	
 		}catch(IOException e) {
 			System.out.println("IO EXCEPTION");
@@ -158,9 +158,9 @@ public class CommandHandler {
 		try {
 			File file = new File(currentDirectory + "/" + argument);
 	        if (file.exists() && file.delete()) {
-	            out.writeUTF("Fichier supprimé\n");
+	            out.writeUTF("Fichier supprimé");
 	        } else {
-	            out.writeUTF("Le fichier n'existe pas\n");
+	            out.writeUTF("Le fichier n'existe pas");
 	        }
 		}catch(IOException e) {
 			System.out.println("IO EXCEPTION");
