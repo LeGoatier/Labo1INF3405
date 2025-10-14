@@ -14,7 +14,7 @@ public class IpValidater {
 	// Adresse et port du serveur
 			inputValidationAdresse:
 			while(true) {
-				System.out.print("Veuilliez entrer l'adresse IPv4 du serveur\n");
+				System.out.print("Veuilliez entrer l'adresse IPv4 du serveur\n>");
 				String input = this.scanner.nextLine();
 				String[] bytes = input.split("\\.");
 				if(bytes.length != 4)
@@ -45,7 +45,7 @@ public class IpValidater {
 	 while(true) {
 		 try {
 			System.out.print("Veuilliez entrer le port du serveur du serveur "
-					+ "\nil devrait ëtre entre 5000 et 5050 pour être valide\n");
+					+ "\nil devrait ëtre entre 5000 et 5050 pour être valide\n>");
 			Integer input  = this.scanner.nextInt();
 			if(input >= 5000 && input <= 5050) {
 				return input;
