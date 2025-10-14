@@ -9,8 +9,8 @@ public class Server {
 	// Application Serveur
 	public static void main(String[] args) throws Exception {
 		IpValidater ipv = new IpValidater();
-		int port = ipv.getPort();
 		String ip = ipv.getIP();
+		int port = ipv.getPort();
 		// Compteur incrémenté à chaque connexion d'un client au serveur
 		int clientNumber = 0;
 		// Adresse et port du serveur
