@@ -14,15 +14,13 @@ public class Server {
 		// Compteur incrémenté à chaque connexion d'un client au serveur
 		int clientNumber = 0;
 		// Adresse et port du serveur
-		String serverAddress = "127.0.0.1";
-		int serverPort = 5000;
 		// Création de la connexien pour communiquer ave les, clients
 		Listener = new ServerSocket();
 		Listener.setReuseAddress(true);
-		InetAddress serverIP = InetAddress.getByName(serverAddress);
+		InetAddress serverIP = InetAddress.getByName(ip);
 		// Association de l'adresse et du port à la connexien
-		Listener.bind(new InetSocketAddress(serverIP, serverPort));
-		System.out.format("The server is running on %s:%d%n", serverAddress, serverPort);
+		Listener.bind(new InetSocketAddress(serverIP, port));
+		System.out.format("The server is running on %s:%d%n", ip, port);
 		try {
 			// À chaque fois qu'un nouveau client se, connecte, on exécute la fonstion
 			// run() de l'objet ClientHandler
