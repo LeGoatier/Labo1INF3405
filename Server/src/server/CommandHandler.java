@@ -18,12 +18,12 @@ public class CommandHandler {
 			
 			String[] words = input.split(" ");
 			
-			String cmd = words[0].toUpperCase();
+			String cmd = words[0].toLowerCase();
 			
 			String argument = words.length > 1 ? words[1] : "";
 	
 		    switch (cmd) {
-		        case "CD":
+		        case "cd":
 		            if (words.length < 2) {
 		                out.writeUTF("Utilisation: cd <répertoire>");
 		            } else {
@@ -31,31 +31,31 @@ public class CommandHandler {
 		            }
 		            break;
 	
-		        case "LS":
+		        case "ls":
 		            listFiles(out);
 		            break;
 		            
-		        case "MKDIR":
+		        case "mkdir":
 		        		makeDirectory(argument, out);
 		        		break;
 	
-		        case "UPLOAD":
+		        case "upload":
 		            receiveFile(argument, in, out);
 		            break;
 	
-		        case "DOWNLOAD":
+		        case "download":
 		            sendFile(argument, out);
 		            break;
 	
-		        case "DELETE":
+		        case "delete":
 		            deleteFile(argument, out);
 		            break;
 	
-		        case "EXIT":
+		        case "exit":
 		            out.writeUTF("Bye bye");
 		            break;
 		            
-		        case "ECHO":
+		        case "echo":
 					out.writeUTF(input);
 					break;
 					

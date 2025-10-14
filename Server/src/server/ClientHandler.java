@@ -24,10 +24,11 @@ public class ClientHandler extends Thread { // pour traiter la demande de chaque
 			while(true) {
 				String cmd = in.readUTF();
 				System.out.println(
-						socket.toString()
+						"[".concat(socket.getInetAddress().toString()).concat(".")
+						.concat(String.valueOf(socket.getPort()))
 						.concat(" - ")
 						.concat(new Date().toString())
-						.concat(" : ")
+						.concat("] : ")
 						.concat(cmd)
 						);
 				cmdh.handleCmd(cmd, in, out);
