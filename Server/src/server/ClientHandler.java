@@ -7,8 +7,9 @@ import java.net.Socket;
 public class ClientHandler extends Thread { // pour traiter la demande de chaque client sur un socket particulier
 	private Socket socket;
 	private int clientNumber;
-
+	private CommandHandler cmd;
 	public ClientHandler(Socket socket, int clientNumber) {
+		this.cmd = new CommandHandler();
 		this.socket = socket;
 		this.clientNumber = clientNumber;
 		System.out.println("New connection with client#" + clientNumber + " at" + socket);
@@ -17,15 +18,11 @@ public class ClientHandler extends Thread { // pour traiter la demande de chaque
 	public void run() {
 		try {
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream()); // création de canal d’envoi
-			out.writeUTF("Hello from server - you are client#" + clientNumber); // envoi de message
-			
+			out.writeUTF("\033[91mConnection Completed\033[0m\n"); // envoi de message
 			DataInputStream in = new DataInputStream(socket.getInputStream());
-			
 			while(true) {
-				String input = in.readUTF();
-				out.writeUTF(input.concat(" <3\n"));
+				cmd.handleCmd(in.readUTF(), in, out);
 			}
-			
 		} catch (IOException e) {
 			System.out.println("Error handling client# " + clientNumber + ": " + e);
 		} finally {
