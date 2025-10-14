@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.DataInputStream;
 public class CommandHandler {
+	String wd = "";
 	public void handleCmd(String input, DataInputStream in, DataOutputStream out) {
 		try {
 		String[] words = input.split(" ");
