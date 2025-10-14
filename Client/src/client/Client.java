@@ -17,8 +17,8 @@ public class Client {
 		inputValidationAdresse:
 		while(!ipValide) {
 			System.out.print("Veulliez entrer l'adresse IPv4 du serveur");
-			String input = scanner.nextLine();
-			String[] bytes = input.split("\\.");
+			String inputIp = scanner.nextLine();
+			String[] bytes = inputIp.split("\\.");
 			if(bytes.length != 4)
 			{
 				System.out.print("L'adresse doit être sur 4 octets");
@@ -42,8 +42,8 @@ public class Client {
 		while(!portValide) {
 			System.out.print("Veulliez entrer le port du serveur du serveur "
 					+ "\nil devrait ëtre entre 5000 et 5050 pour être valide");
-			Integer input  = scanner.nextInt();
-			if(input >= 5000 && input <= 5050)
+			Integer inputPort  = scanner.nextInt();
+			if(inputPort >= 5000 && inputPort <= 5050)
 				 portValide = true;
 			
 		}
