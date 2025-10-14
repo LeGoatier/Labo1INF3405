@@ -30,10 +30,9 @@ public class Client {
 		// fermeture de La connexion avec le serveur
 		while(true)
 		{
-			System.out.println(in.readUTF() + "\n");
-			cmdHandler.lastcmd = scanner.nextLine();
+			System.out.print(">");
+			cmdHandler.lastcmd = scanner.nextLine().toUpperCase();
 			cmdHandler.handleOut(in, out, socket);
-			cmdHandler.handleIn(in.readUTF(), in, out);
 			
 		}
 	}
