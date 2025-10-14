@@ -8,7 +8,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 public class CommandHandler {
-	File currentDirectory = new File("");
+	File currentDirectory = new File(System.getProperty("user.dir"));
 	
 	public void handleCmd(String input, DataInputStream in, DataOutputStream out) {
 		try {
