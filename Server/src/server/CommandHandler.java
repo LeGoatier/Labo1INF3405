@@ -12,10 +12,15 @@ public class CommandHandler {
 	
 	public void handleCmd(String input, DataInputStream in, DataOutputStream out) {
 		try {
+			if(input == null || input == "") {
+				out.writeUTF("Commande vide, réessayez\n");
+			}
+			
 			String[] words = input.split(" ");
 			
 			String cmd = words[0].toUpperCase();
-			String argument = words[1];
+			
+			String argument = words.length > 1 ? words[1] : "";
 	
 		    switch (cmd) {
 		        case "CD":
