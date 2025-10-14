@@ -56,11 +56,7 @@ public class CommandHandler {
 		            break;
 		            
 		        case "ECHO":
-					String s = "";
-					for(int i = 1; i < words.length; ++i) {
-						s.concat(words[i].concat(" "));
-						out.writeUTF(s.concat("\n"));
-					}
+					out.writeUTF(input);
 					break;
 					
 		        default:
