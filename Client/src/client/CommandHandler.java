@@ -33,12 +33,20 @@ public class CommandHandler {
 	{
 		try {
 			out.writeUTF(lastcmd);
-			FileOutputStream file = new FileOutputStream(baseDir + (lastcmd.split(" ")[lastcmd.split(" ").length -1]));
-			byte[] data = new byte[(int) in.readLong()];
-			in.readFully(data);
-			file.write(data);
-			file.close();
-			System.out.println("Fichier téléchargé avec succès !!!");
+			String ack = in.readUTF();
+			if(ack.equals("ACK-DOWNLOAD"))
+			{
+				FileOutputStream file = new FileOutputStream(baseDir + (lastcmd.split(" ")[lastcmd.split(" ").length -1]));
+				byte[] data = new byte[(int) in.readLong()];
+				in.readFully(data);
+				file.write(data);
+				file.close();
+				System.out.println("Fichier téléchargé avec succès !!!");
+			}
+			else
+			{
+				System.out.println("Ce fichier n'existe pas");
+			}
 		}
 		catch (IOException e) {
             e.printStackTrace();
@@ -46,20 +54,27 @@ public class CommandHandler {
 	}
 	private void upload(DataInputStream in, DataOutputStream out)
 	{
+		String arg = lastcmd.split(" ")[lastcmd.split(" ").length -1];
 		try {
-			out.writeUTF(lastcmd);
-			String ack = in.readUTF();
-			System.out.println("Ack:" + ack);
-			if(ack.equals("ACK-UPLOAD"))
+			File file = new File(baseDir +arg );
+			if(file.exists())
 			{
-				System.out.println("on est dans le if");
-				System.out.println(Paths.get(baseDir));
-				byte[] data  = Files.readAllBytes(Paths.get(baseDir +lastcmd.split(" ")[lastcmd.split(" ").length -1]));
-				out.writeLong(data.length);
-				out.write(data);
-				out.flush();
-				System.out.println("Ficher téléversé avec succès !!!");
+				out.writeUTF(lastcmd);
+				String ack = in.readUTF();
+				if(ack.equals("ACK-UPLOAD"))
+				{
+					byte[] data  = Files.readAllBytes(Paths.get(baseDir +arg));
+					out.writeLong(data.length);
+					out.write(data);
+					out.flush();
+					System.out.println("Ficher téléversé avec succès !!!");
+				}
 			}
+			else
+			{
+				System.out.println("Ce fichier n'existe pas");
+			}
+			
 			
 		}
 		catch (Exception e) {

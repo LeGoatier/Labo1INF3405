@@ -20,7 +20,7 @@ public class Server {
 		InetAddress serverIP = InetAddress.getByName(ip);
 		// Association de l'adresse et du port à la connexien
 		Listener.bind(new InetSocketAddress(serverIP, port));
-		System.out.format("The server is running on %s:%d%n", ip, port);
+		System.out.format("Le serveur est en marche sur %s:%d%n", ip, port);
 		try {
 			// À chaque fois qu'un nouveau client se, connecte, on exécute la fonstion
 			// run() de l'objet ClientHandler

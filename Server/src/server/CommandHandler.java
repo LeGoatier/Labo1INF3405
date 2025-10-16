@@ -85,12 +85,13 @@ public class CommandHandler {
 	private void changeDirectory(String argument, DataOutputStream out) {
 		try {
 			File newDir;
-		    
+		    String message = "";
 		    if (argument.equals("..")) {
 		        newDir = currentDirectory.getParentFile();
 		        // Vérifie si on essaie de sortir de la racine
 		        if (newDir == null || !newDir.getAbsolutePath().startsWith(baseDir.getAbsolutePath())) {
 		            newDir = currentDirectory;
+		            message = message + "Vous ne pouvez pas aller plus haut que server_root\n";
 		        }
 		    } else {
 		        newDir = new File(currentDirectory, argument);
@@ -98,10 +99,12 @@ public class CommandHandler {
 	
 		    if (newDir.exists() && newDir.isDirectory()) {
 		    		currentDirectory = newDir.getCanonicalFile(); // normalise le chemin
-		        out.writeUTF("Répertoire courant: " + currentDirectory.getName());
+		        
 		    } else {
-		        out.writeUTF("cd: répertoire introuvable: " + argument + "\n");
+		        message = "cd: répertoire introuvable: " + argument + "\n";
 		    }
+		    message = message + "Répertoire courant: " + currentDirectory.getName();
+		    out.writeUTF(message);
 		}catch(IOException e) {
 			System.out.println("IO EXCEPTION");
 		}
@@ -150,9 +153,19 @@ public class CommandHandler {
 	
 	private void sendFile(String fileName, DataOutputStream out) {
 		try {
-			byte[] data  = Files.readAllBytes(Paths.get(currentDirectory.getPath().concat("/").concat(fileName)));
-			out.writeLong(data.length);
-			out.write(data);
+			File file = new File(currentDirectory, fileName);
+			if(file.exists()) {
+				out.writeUTF("ACK-DOWNLOAD");
+				byte[] data  = Files.readAllBytes(Paths.get(currentDirectory.getPath().concat("/").concat(fileName)));
+				
+				out.writeLong(data.length);
+				out.write(data);
+			}
+			else
+			{
+				out.writeUTF("ACK-NOFILE");
+			}
+			
 		}
 		catch (IOException e) {
             e.printStackTrace();

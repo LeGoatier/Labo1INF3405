@@ -45,7 +45,7 @@ public class IpValidater {
 	 while(true) {
 		 try {
 			System.out.print("Veuilliez entrer le port du serveur du serveur "
-					+ "\nil devrait ëtre entre 5000 et 5050 pour être valide\n>");
+					+ "\nil devrait être entre 5000 et 5050 pour être valide\n>");
 			Integer input  = this.scanner.nextInt();
 			if(input >= 5000 && input <= 5050) {
 				return input;

@@ -13,13 +13,13 @@ public class ClientHandler extends Thread { // pour traiter la demande de chaque
 		this.cmdh = new CommandHandler();
 		this.socket = socket;
 		this.clientNumber = clientNumber;
-		System.out.println("New connection with client#" + clientNumber + " at" + socket);
+		System.out.println("Nouvelle connexion avec client#" + clientNumber + " à " + socket);
 	}
 
 	public void run() {
 		try {
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream()); // création de canal d’envoi
-			out.writeUTF("\033[91mConnection Completed\033[0m\n"); // envoi de message
+			out.writeUTF("\033[91mConnexion Effectuée\033[0m\n"); // envoi de message
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 			while(true) {
 				String cmd = in.readUTF();
@@ -34,14 +34,14 @@ public class ClientHandler extends Thread { // pour traiter la demande de chaque
 				cmdh.handleCmd(cmd, in, out);
 			}
 		} catch (IOException e) {
-			System.out.println("Error handling client# " + clientNumber + ": " + e);
+			System.out.println("Erreur en utlilisant client# " + clientNumber + ": " + e);
 		} finally {
 			try {
 				socket.close();
 			} catch (IOException e) {
 				System.out.println("Couldn't close a socket, what's going on?");
 			}
-			System.out.println("Connection with client# " + clientNumber + " closed");
+			System.out.println("Connexion avec client# " + clientNumber + " fermée");
 		}
 	}
 }
