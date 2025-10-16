@@ -133,10 +133,14 @@ public class CommandHandler {
 	private void receiveFile(String fileName, DataInputStream in, DataOutputStream out) {
 		try {
 			out.writeUTF("ACK-UPLOAD");
+			System.out.println("Ack envoyé");
 			File file = new File(currentDirectory, fileName);
 			FileOutputStream fos = new FileOutputStream(file);
+			System.out.println("En attente de lecture");
 			fos.write(in.readAllBytes());
+			System.out.println("On est rendu");
 			fos.close();
+			
 		}
 		catch (IOException e) {
             e.printStackTrace();

@@ -40,10 +40,13 @@ public class CommandHandler {
 		try {
 			out.writeUTF(lastcmd);
 			String ack = in.readUTF();
-			if(ack == "ACK-UPLOAD")
+			System.out.println("Ack:" + ack);
+			if(ack.equals("ACK-UPLOAD"))
 			{
+				System.out.println("on est dans le if");
 				byte[] data  = Files.readAllBytes(Paths.get(new URI(lastcmd.split(" ")[lastcmd.split(" ").length -1])));
 				out.write(data);
+				System.out.println("On a upload tout:" + data);
 			}
 			
 		}
