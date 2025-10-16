@@ -180,9 +180,13 @@ public class CommandHandler {
 	
 	private void deleteFile(String argument, DataOutputStream out) {
 		try {
-			File file = new File(currentDirectory + "/" + argument);
-	        if (file.exists() && file.delete()) {
-	            out.writeUTF("Fichier supprimé");
+			File file = new File(currentDirectory, argument);
+	        if (file.exists()) {
+	        		if(file.delete()) {
+	        			out.writeUTF("Fichier supprimé");
+	        		}else {
+	        			out.writeUTF("Problème dans la suppression du fichier");
+	        		}
 	        } else {
 	            out.writeUTF("Le fichier n'existe pas");
 	        }
