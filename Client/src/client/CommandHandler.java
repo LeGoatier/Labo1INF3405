@@ -9,6 +9,12 @@ public class CommandHandler {
 	String lastcmd;
 	boolean hasConnection = true;
 	
+	String baseDir;
+	
+	public CommandHandler() {
+		baseDir = System.getProperty("user.dir") +  "/client_root/";
+	}
+	
 	
 	
 	private void exit ( DataInputStream in, DataOutputStream out, Socket s)
@@ -27,7 +33,7 @@ public class CommandHandler {
 	{
 		try {
 			out.writeUTF(lastcmd);
-			FileOutputStream file = new FileOutputStream((lastcmd.split(" ")[lastcmd.split(" ").length -1]));
+			FileOutputStream file = new FileOutputStream(baseDir + (lastcmd.split(" ")[lastcmd.split(" ").length -1]));
 			file.write(in.readAllBytes());
 			file.close();
 		}
@@ -44,8 +50,11 @@ public class CommandHandler {
 			if(ack.equals("ACK-UPLOAD"))
 			{
 				System.out.println("on est dans le if");
-				byte[] data  = Files.readAllBytes(Paths.get(new URI(lastcmd.split(" ")[lastcmd.split(" ").length -1])));
+				System.out.println(Paths.get(baseDir));
+				byte[] data  = Files.readAllBytes(Paths.get(baseDir +lastcmd.split(" ")[lastcmd.split(" ").length -1]));
+				out.writeLong(data.length);
 				out.write(data);
+				out.flush();
 				System.out.println("On a upload tout:" + data);
 			}
 			

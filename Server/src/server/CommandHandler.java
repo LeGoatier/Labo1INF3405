@@ -134,10 +134,11 @@ public class CommandHandler {
 		try {
 			out.writeUTF("ACK-UPLOAD");
 			System.out.println("Ack envoyé");
-			File file = new File(currentDirectory, fileName);
-			FileOutputStream fos = new FileOutputStream(file);
+			FileOutputStream fos = new FileOutputStream(currentDirectory + "/" + fileName);
 			System.out.println("En attente de lecture");
-			fos.write(in.readAllBytes());
+			byte[] data = new byte[(int) in.readLong()];
+			in.readFully(data);
+			fos.write(data);
 			System.out.println("On est rendu");
 			fos.close();
 			
@@ -149,7 +150,7 @@ public class CommandHandler {
 	
 	private void sendFile(String fileName, DataOutputStream out) {
 		try {
-			byte[] data  = Files.readAllBytes(Paths.get(new URI(currentDirectory.getPath().concat("/").concat(fileName))));
+			byte[] data  = Files.readAllBytes(Paths.get(currentDirectory.getPath().concat("/").concat(fileName)));
 			out.write(data);
 		}
 		catch (IOException e) {
