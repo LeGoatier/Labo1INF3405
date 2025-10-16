@@ -151,6 +151,7 @@ public class CommandHandler {
 	private void sendFile(String fileName, DataOutputStream out) {
 		try {
 			byte[] data  = Files.readAllBytes(Paths.get(currentDirectory.getPath().concat("/").concat(fileName)));
+			out.writeLong(data.length);
 			out.write(data);
 		}
 		catch (IOException e) {

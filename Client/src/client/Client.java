@@ -31,7 +31,7 @@ public class Client {
 		while(cmdHandler.hasConnection)
 		{
 			System.out.print(">");
-			cmdHandler.lastcmd = scanner.nextLine().toUpperCase();
+			cmdHandler.lastcmd = scanner.nextLine();
 			cmdHandler.handleOut(in, out, socket);
 			
 		}

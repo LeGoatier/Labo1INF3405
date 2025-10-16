@@ -34,8 +34,11 @@ public class CommandHandler {
 		try {
 			out.writeUTF(lastcmd);
 			FileOutputStream file = new FileOutputStream(baseDir + (lastcmd.split(" ")[lastcmd.split(" ").length -1]));
-			file.write(in.readAllBytes());
+			byte[] data = new byte[(int) in.readLong()];
+			in.readFully(data);
+			file.write(data);
 			file.close();
+			System.out.println("Fichier téléchargé avec succès !!!");
 		}
 		catch (IOException e) {
             e.printStackTrace();
@@ -55,7 +58,7 @@ public class CommandHandler {
 				out.writeLong(data.length);
 				out.write(data);
 				out.flush();
-				System.out.println("On a upload tout:" + data);
+				System.out.println("Ficher téléversé avec succès !!!");
 			}
 			
 		}
@@ -68,7 +71,7 @@ public class CommandHandler {
 	{
 		
 		
-		switch (lastcmd.split(" ")[0]) {
+		switch (lastcmd.split(" ")[0].toUpperCase()) {
 		case "EXIT": 
 			exit(in,out,s);
 			hasConnection = false;
