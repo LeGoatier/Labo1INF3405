@@ -8,7 +8,20 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 public class CommandHandler {
-	File currentDirectory = new File(System.getProperty("user.dir"));
+	File currentDirectory;
+	File baseDir;
+	public CommandHandler() {
+		baseDir = new File(System.getProperty("user.dir"), "server_root");
+
+		// Créer le dossier s’il n’existe pas encore
+		if (!baseDir.exists()) {
+		    baseDir.mkdir();
+		}
+
+		currentDirectory = baseDir;
+	}
+	
+	
 	
 	public void handleCmd(String input, DataInputStream in, DataOutputStream out) {
 		try {
@@ -75,7 +88,10 @@ public class CommandHandler {
 		    
 		    if (argument.equals("..")) {
 		        newDir = currentDirectory.getParentFile();
-		        if (newDir == null) newDir = currentDirectory; // rester à la racine
+		        // Vérifie si on essaie de sortir de la racine
+		        if (newDir == null || !newDir.getAbsolutePath().startsWith(baseDir.getAbsolutePath())) {
+		            newDir = currentDirectory;
+		        }
 		    } else {
 		        newDir = new File(currentDirectory, argument);
 		    }
